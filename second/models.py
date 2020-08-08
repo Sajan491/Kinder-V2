@@ -276,15 +276,15 @@ class Contacts(models.Model):
 class Course(models.Model):
     course_title = models.TextField()
     instructor   = models.ForeignKey(User, on_delete = models.CASCADE)
-    announcement = models.TextField(null = True)
-    syllabus     = models.FileField(null= True, blank=True, upload_to='syllabus/', verbose_name="")
-    course_plan  = models.FileField(null = True, upload_to = 'course_plan/', verbose_name = "")
+    announcement = models.TextField(null = True, blank=True)
+    syllabus     = models.FileField(null= True, blank=True, upload_to='syllabus/', verbose_name="Syllabus")
+    course_plan  = models.FileField(null = True, blank=True, upload_to = 'course_plan/', verbose_name = "Course Plan")
 
     def __str__(self):
         return self.course_title
     
 
-    def get_abosulute_url(self):
+    def get_absolute_url(self):
         return reverse('course-detail', kwargs={'pk': self.pk})
 
     def save(self, *args, **kwargs):
@@ -316,7 +316,7 @@ class Tutorial(models.Model):
         return "%s - %s" % (self.author, self.title)
 
     class Meta:
-        ordering = ['date_posted']
+        ordering = ['-date_posted']
     
     def get_absolute_url(self):
         return reverse('tutorial-detail', kwargs = { 'pk': self.pk})
@@ -335,7 +335,7 @@ class Attachment(models.Model):
         return f'{self.title}\'s Attachment'
 
     class Meta:
-        ordering = ['date_posted']
+        ordering = ['-date_posted']
     
     def get_absolute_url(self):
         return reverse('attachment-detail', kwargs = {'pk': self.pk})
@@ -349,7 +349,7 @@ class Assignments(models.Model):
     title = models.CharField(max_length=500)
     description = models.TextField(null=True)
     file = models.FileField(upload_to='assignments/',
-                            null=True, verbose_name="")
+                            null=True, blank=True, verbose_name="")
     date_posted = models.DateTimeField(default=timezone.now)
     deadline = models.DateField()
 
