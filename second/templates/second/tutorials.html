@@ -25,6 +25,7 @@
       <hr />
       {% endfor %}
     </div>
+    {% if user.user_teachers != '' %}
     <a
       style="margin-top: 20px; margin-bottom: 10px; width: 100%;"
       name="createpost"
@@ -32,6 +33,7 @@
       href="{% url 'tutorial-create' %}"
       >Add Tutorial</a
     >
+    {% endif %}
   </body>
 </html>
 {% endblock %}
